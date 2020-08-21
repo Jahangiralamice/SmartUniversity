@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
 using SmartUniversity.Models;
 
@@ -26,6 +23,15 @@ namespace SmartUniversity.Controllers
         {
             var departments = _context.Departments.ToList();
             return View(departments);
+        }
+
+        public ActionResult Details(int id)
+        {
+            var department = _context.Departments.SingleOrDefault(r => r.Id == id);
+            if (department == null)
+                return HttpNotFound();
+            return View(department);
+
         }
 
         [HttpGet]
@@ -53,6 +59,25 @@ namespace SmartUniversity.Controllers
         public ActionResult Edit(int id)
         {
             var department = _context.Departments.SingleOrDefault(r => r.Id == id);
+            if (department == null)
+                return HttpNotFound();
+            return View(department);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(Department department)
+        {
+            if (ModelState.IsValid)
+            {
+                var departmentInDb = _context.Departments.Single(r => r.Id == department.Id);
+                departmentInDb.Code = department.Code;
+                departmentInDb.Name = department.Name;
+
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
             return View(department);
         }
     }

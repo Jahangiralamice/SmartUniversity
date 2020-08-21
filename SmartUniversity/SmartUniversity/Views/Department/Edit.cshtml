@@ -5,7 +5,7 @@
 }
 
 <h2>Update Department</h2>
-@using (Html.BeginForm("Create", "Department"))
+@using (Html.BeginForm("Edit", "Department"))
 {
     @Html.ValidationSummary(true, "Please fix the following errors.")
     <div class="form-group">
@@ -19,6 +19,7 @@
         @Html.ValidationMessageFor(m => m.Name)
     </div>
     @Html.AntiForgeryToken()
+    @Html.HiddenFor(model=>model.Id)
     <button type="submit" class="btn btn-primary">Save</button>
 }
 
