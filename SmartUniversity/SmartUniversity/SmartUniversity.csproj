@@ -201,10 +201,19 @@
     <Compile Include="Migrations\202008211728070_CourseModelAdded.Designer.cs">
       <DependentUpon>202008211728070_CourseModelAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202008221319138_DesignationModelAdded.cs" />
+    <Compile Include="Migrations\202008221319138_DesignationModelAdded.Designer.cs">
+      <DependentUpon>202008221319138_DesignationModelAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202008221328419_UpdateDesignation.cs" />
+    <Compile Include="Migrations\202008221328419_UpdateDesignation.Designer.cs">
+      <DependentUpon>202008221328419_UpdateDesignation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\Department.cs" />
+    <Compile Include="Models\Designation.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Semester.cs" />
@@ -309,6 +318,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202008211728070_CourseModelAdded.resx">
       <DependentUpon>202008211728070_CourseModelAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008221319138_DesignationModelAdded.resx">
+      <DependentUpon>202008221319138_DesignationModelAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008221328419_UpdateDesignation.resx">
+      <DependentUpon>202008221328419_UpdateDesignation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
