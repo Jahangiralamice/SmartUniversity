@@ -1,0 +1,42 @@
+﻿@model SmartUniversity.ViewModels.CourseViewModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Add Course</h2>
+@using (Html.BeginForm("Create", "Course"))
+{
+    @Html.ValidationSummary(true, "Please fix the following errors.")
+    <div class="form-group">
+        @Html.LabelFor(m => m.Course.CourseCode)
+        @Html.TextBoxFor(m => m.Course.CourseCode, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Course.CourseCode)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Course.CourseName)
+        @Html.TextBoxFor(m => m.Course.CourseName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Course.CourseName)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Course.Credit)
+        @Html.TextBoxFor(m => m.Course.Credit, new { @class = "form-control", @type = "number",@step = "0.5" })
+        @Html.ValidationMessageFor(m => m.Course.Credit)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Course.Description)
+        @Html.TextAreaFor(m => m.Course.Description, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Course.Description)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Course.DepartmentId)
+        @Html.DropDownListFor(m => m.Course.DepartmentId, new SelectList(Model.Departments, "Id", "Name"), "Select Department", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Course.DepartmentId)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Course.SemesterId)
+        @Html.DropDownListFor(m => m.Course.SemesterId, new SelectList(Model.Semesters, "Id", "SemesterName"), "Select Semester", new { @class = "form-control" })
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+}
+

@@ -18,8 +18,7 @@ namespace SmartUniversity.Controllers
             _context.Dispose();
         }
 
-        // GET: Department
-        public ActionResult Index()
+        public ViewResult Index()
         {
             var departments = _context.Departments.ToList();
             return View(departments);
