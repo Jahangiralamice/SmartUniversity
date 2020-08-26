@@ -19,7 +19,6 @@ namespace SmartUniversity.Controllers
             _context.Dispose();
         }
 
-        // GET: Course
         public ViewResult Index()
         {
             var courses = _context.Courses.ToList();
@@ -49,7 +48,9 @@ namespace SmartUniversity.Controllers
                 Departments = _context.Departments.ToList(),
                 Semesters = _context.Semesters.ToList()
             };
-            if (!ModelState.IsValid)
+            var isExist = _context.Courses.FirstOrDefault(r =>
+                r.CourseCode == course.CourseCode || r.CourseName == course.CourseName);
+            if (!ModelState.IsValid && isExist == null)
             {
                 return View(courseViewModel);
             }
@@ -89,8 +90,9 @@ namespace SmartUniversity.Controllers
                 Departments = _context.Departments.ToList(),
                 Semesters = _context.Semesters.ToList()
             };
-
-            if (ModelState.IsValid && course.Credit >= 0.5 && course.Credit <= 5.0)
+            var isExist = _context.Courses.FirstOrDefault(r =>
+                r.CourseCode == course.CourseCode || r.CourseName == course.CourseName);
+            if (ModelState.IsValid && course.Credit >= 0.5 && course.Credit <= 5.0 && isExist == null)
             {
                 var courseInDb = _context.Courses.Single(r => r.Id == course.Id);
                 courseInDb.CourseCode = course.CourseCode;

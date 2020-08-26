@@ -3,6 +3,13 @@
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@if (ViewBag.ExistMessage != null)
+{
+    <div style="background-color: brown; color: aqua;">
+        <h3>@ViewBag.ExistMessage</h3>
+    </div>
+    
+}
 
 <h2>Update Department</h2>
 @using (Html.BeginForm("Edit", "Department"))

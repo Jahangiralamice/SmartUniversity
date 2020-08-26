@@ -24,6 +24,7 @@ namespace SmartUniversity.Models
         public DbSet<Semester> Semesters { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Designation> Designations { get; set; }
+        public DbSet<Teacher> Teachers { get; set; }
 
 
 

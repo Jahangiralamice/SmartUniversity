@@ -43,14 +43,20 @@ namespace SmartUniversity.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Department department)
         {
-            if (ModelState.IsValid)
+            var isExist =
+                _context.Departments.FirstOrDefault(r => r.Name == department.Name || r.Code == department.Code);
+            if (ModelState.IsValid && isExist == null)
             {
                 _context.Departments.Add(department);
                 _context.SaveChanges();
+                TempData["Success"] = department.Name + " " + "department successfully saved.";
                 return RedirectToAction("Index");
 
             }
-
+            if (isExist != null)
+            {
+                ViewBag.ExistMessage = "Department Name or Code already exist!!";
+            }
             return View(department);
         }
 
@@ -67,7 +73,8 @@ namespace SmartUniversity.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Department department)
         {
-            if (ModelState.IsValid)
+            var isExist = _context.Departments.FirstOrDefault(r => r.Id != department.Id || r.Name == department.Name);
+            if (ModelState.IsValid && isExist == null)
             {
                 var departmentInDb = _context.Departments.Single(r => r.Id == department.Id);
                 departmentInDb.Code = department.Code;
@@ -75,6 +82,11 @@ namespace SmartUniversity.Controllers
 
                 _context.SaveChanges();
                 return RedirectToAction("Index");
+            }
+
+            if (isExist != null)
+            {
+                ViewBag.ExistMessage = "Department Name or Code already exist!!";
             }
 
             return View(department);

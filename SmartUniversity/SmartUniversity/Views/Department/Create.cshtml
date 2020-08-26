@@ -4,6 +4,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<div style="background-color: brown; color: aqua;">
+    <h3>@ViewBag.ExistMessage</h3>
+</div>
+
 <h2>Add Department</h2>
 @using (Html.BeginForm("Create", "Department"))
 {

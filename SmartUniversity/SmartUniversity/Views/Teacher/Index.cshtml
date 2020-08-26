@@ -1,0 +1,45 @@
+﻿@model IEnumerable<SmartUniversity.Models.Teacher>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    th {
+        text-align: center;
+    }
+</style>
+
+<h2>Teacher</h2>
+<p>
+    @Html.ActionLink("Create","Create", "Teacher", new {@class = "btn btn-primary"})
+</p>
+<table class="table table-bordered table-hover">
+    <thead>
+    <tr>
+        <td>Name</td>
+        <td>Address</td>
+        <td>Email</td>
+        <td>Contact No</td>
+        <td>Designation</td>
+        <td>Department</td>
+        <td>Credit To Be Taken</td>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var teacher in Model)
+    {
+        <tr>
+            <td>@Html.ActionLink(teacher.Name, "Edit","Teacher", new {@id = teacher.Id}, null)</td>
+            <td>@teacher.Name</td>
+            <td>@teacher.Address</td>
+            <td>@teacher.Email</td>
+            <td>@teacher.ContactNo</td>
+            <td>@teacher.Designation.Name</td>
+            <td>@teacher.Department.Name</td>
+            <td>@teacher.CreditToBeTaken</td>
+        </tr>
+    }
+    </tbody>
+</table>
+
