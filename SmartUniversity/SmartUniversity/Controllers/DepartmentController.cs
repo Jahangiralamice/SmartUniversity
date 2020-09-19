@@ -91,5 +91,10 @@ namespace SmartUniversity.Controllers
 
             return View(department);
         }
+
+        public ActionResult Delete(int id)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

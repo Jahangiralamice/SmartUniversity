@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
 using SmartUniversity.Models;
 using SmartUniversity.ViewModels;
@@ -88,7 +85,7 @@ namespace SmartUniversity.Controllers
             };
             if (ModelState.IsValid)
             {
-                var teacherInDb = _context.Teachers.Single(r => r.Id == teacher.Id);
+                var teacherInDb = _context.Teachers.FirstOrDefault(r => r.Id == teacher.Id);
                 teacherInDb.Name = teacher.Name;
                 teacherInDb.Address = teacher.Address;
                 teacherInDb.ContactNo = teacher.ContactNo;
@@ -101,6 +98,16 @@ namespace SmartUniversity.Controllers
             }
 
             return View(teacherViewModel);
+        }
+
+        public ActionResult Details(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public ActionResult Delete(int id)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

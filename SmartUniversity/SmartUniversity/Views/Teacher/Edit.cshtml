@@ -4,10 +4,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Add Teacher</h2>
+<h2>Update Teacher Information</h2>
 @using (Html.BeginForm("Edit", "Teacher"))
 {
     @Html.ValidationSummary(true, "Please fix the following errors")
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m=>m.Teacher.Id)
     <div class="form-group">
         @Html.LabelFor(m=>m.Teacher.Name)
         @Html.TextBoxFor(m=>m.Teacher.Name, new {@class = "form-control"})
@@ -40,7 +42,8 @@
     </div>
     <div class="form-group">
         @Html.LabelFor(m=>m.Teacher.CreditToBeTaken)
-        @Html.TextBoxFor(m=>m.Teacher.CreditToBeTaken, new {@class = "form-control", @type = "number", @min = "0", @max = "5",@step = "0.5"})
+        @Html.TextBoxFor(m=>m.Teacher.CreditToBeTaken, new {@class = "form-control", @type = "number", @min = "0", @step = "0.5"})
+        @Html.ValidationMessageFor(m=>m.Teacher.CreditToBeTaken)
     </div>
     <button type="submit" class="btn btn-primary">Save</button>
 }

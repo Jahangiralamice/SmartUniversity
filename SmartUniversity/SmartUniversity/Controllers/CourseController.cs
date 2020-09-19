@@ -107,5 +107,15 @@ namespace SmartUniversity.Controllers
 
             return View(courseViewModel);
         }
+
+        public ActionResult Details(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public ActionResult Delete(int id)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

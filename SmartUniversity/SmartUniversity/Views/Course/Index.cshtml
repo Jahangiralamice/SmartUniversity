@@ -15,26 +15,39 @@
 </p>
 <table class="table table-bordered table-hover">
     <thead>
-        <tr>
+        <tr style="background-color: aquamarine; font-weight: bold">
             <th>Code</th>
             <th>Name</th>
             <th>Credit</th>
             <th>Description</th>
             <th>Department</th>
             <th>Semester</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>@item.CourseCode</td>
-                <td>@Html.ActionLink(item.CourseName, "Edit", "Course", new {@id = item.Id}, null)</td>
-                <td>@item.Credit</td>
-                <td>@item.Description</td>
-                <td>@item.Department.Name</td>
-                <td>@item.Semester.SemesterName</td>
-            </tr>
+        <tr>
+            <td>@item.CourseCode</td>
+            <td>@item.CourseName</td>
+            <td>@item.Credit</td>
+            <td>@item.Description</td>
+            <td>@item.Department.Name</td>
+            <td>@item.Semester.SemesterName</td>
+            <td>
+                <div class="btn-group">
+                    <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                        Action <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="@Url.Action("Details", "Course", new { id = item.Id })">Detail</a></li>
+                        <li><a href="@Url.Action("Edit", "Course", new { id = item.Id })">Edit</a></li>
+                        <li><a href="@Url.Action("Delete", "Course", new { id = item.Id })" onclick="return confirm('Are sure to delete this item?');">Delete</a></li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
         }
     </tbody>
 </table>

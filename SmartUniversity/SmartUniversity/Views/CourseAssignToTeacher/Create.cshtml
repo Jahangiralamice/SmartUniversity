@@ -1,0 +1,122 @@
+﻿@model SmartUniversity.ViewModels.CourseAssignToTeacherViewModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create</h2>
+
+@using (@Html.BeginForm("Create", "CourseAssignToTeacher"))
+{
+    @Html.ValidationSummary(true, "Please fix the following errros.")
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        @Html.LabelFor(m => m.CourseAssignToTeacher.DepartmentId)
+        @Html.DropDownListFor(m => m.CourseAssignToTeacher.DepartmentId, new SelectList(Model.Departments, "Id", "Name"), "Select Department", new { @class = "form-control", @id = "departmentId" })
+        @Html.ValidationMessageFor(m => m.CourseAssignToTeacher.DepartmentId)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.CourseAssignToTeacher.TeacherId)
+        @Html.DropDownListFor(m => m.CourseAssignToTeacher.TeacherId, new SelectList(Model.Teachers, "Id", "Name"), "Select Teacher", new { @class = "form-control", @id = "teacherId", onchange = "getTeacherCredit()" })
+        @Html.ValidationMessageFor(m => m.CourseAssignToTeacher.TeacherId)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.CreditToBeTaken)
+        @Html.TextBoxFor(m => m.CreditToBeTaken, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.RemainingCredit)
+        @Html.TextBoxFor(m => m.RemainingCredit, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.CourseAssignToTeacher.CourseId)
+        @Html.DropDownListFor(m => m.CourseAssignToTeacher.CourseId, new SelectList(Model.Courses, "Id", "CourseCode"), "Select Course", new { @class = "form-control", @id = "courseId" })
+        @Html.ValidationMessageFor(m => m.CourseAssignToTeacher.CourseId)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.CourseAssignToTeacher.CourseId)
+        @Html.TextBoxFor(m => m.CourseAssignToTeacher.CourseId, new { @class = "form-control", @readonly = "readonly", @id = "courseId" })
+        @Html.ValidationMessageFor(m => m.CourseAssignToTeacher.CourseId)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.CourseAssignToTeacher.Course.Credit)
+        @Html.TextBoxFor(m => m.CourseAssignToTeacher.Course.Credit, new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.CourseAssignToTeacher.Course.Credit)
+    </div>
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            $("#teacherId").empty();
+            $("#courseId").empty();
+        });
+
+        $(function() {
+            if ($("#departmentId").val() == '0') {
+                var teacherDefaultValue = "<option value = '0'>--Select a Department first--</option>";
+                $("#teacherId").html(teacherDefaultValue).show();
+            }
+
+            $("#departmentId").change(function() {
+                debugger;
+                var selectedItemValue = $(this).val();
+
+                var ddlTeachers = $("#teacherId");
+                $.ajax({
+                    cache: false,
+                    type: "GET",
+                    url: '@Url.Action("GetAllTeacherByDepartmentId", "CourseAssignToTeacher")',
+                    data: { "departmentId": selectedItemValue },
+                    success: function(data) {
+                        ddlTeachers.html('');
+                        $.each(data,
+                            function(id, option) {
+                                ddlTeachers.append($('<option></option>').val(option.id).html(option.name));
+                            });
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        alert('Found error to load teacher!!');
+                    }
+                });
+
+                $.ajax({
+                    url: '@Url.Action("GetAllCourseByDepartmentId", "CourseAssignToTeacher")',
+                    data: params,
+                    type: "POST",
+                    success: function(result) {
+                        $.each(result,
+                            function(index, value) {
+                                $('#courseId').append('<option value="' + value.Id + '">' + value.Code + '</option>');
+                            });
+                    },
+                    error: function(err) {
+                        alert(err);
+                    }
+                });
+            });
+        });
+
+        function getTeacherCredit() {
+            debugger;
+            var id = $("#TeacherId").val();
+            var params = { teacherId: id };
+            $.ajax({
+                url: '@Url.Action("GetTeacherWithCourse", "CourseAssignToTeacher")',
+                data: params,
+                type: "POST",
+                success: function (result) {
+
+                    $("#CreditToBeTaken").val(result.CreditToTake);
+                    $("#RemainingCredit").val(result.CreditToTake - result.CreditTaken);
+                },
+                error: function (err) {
+                    alert(err);
+                }
+            });
+        }
+    </script>
+}

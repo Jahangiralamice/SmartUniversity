@@ -8,6 +8,7 @@
 @using (Html.BeginForm("Create", "Course"))
 {
     @Html.ValidationSummary(true, "Please fix the following errors.")
+    @Html.AntiForgeryToken()
     <div class="form-group">
         @Html.LabelFor(m => m.Course.CourseCode)
         @Html.TextBoxFor(m => m.Course.CourseCode, new { @class = "form-control" })

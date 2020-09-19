@@ -16,7 +16,7 @@
 </p>
 <table class="table table-bordered table-hover">
     <thead>
-    <tr>
+    <tr style="background-color: aquamarine; font-weight: bold">
         <td>Name</td>
         <td>Address</td>
         <td>Email</td>
@@ -24,13 +24,13 @@
         <td>Designation</td>
         <td>Department</td>
         <td>Credit To Be Taken</td>
+        <td>Action</td>
     </tr>
     </thead>
     <tbody>
     @foreach (var teacher in Model)
     {
         <tr>
-            <td>@Html.ActionLink(teacher.Name, "Edit","Teacher", new {@id = teacher.Id}, null)</td>
             <td>@teacher.Name</td>
             <td>@teacher.Address</td>
             <td>@teacher.Email</td>
@@ -38,6 +38,18 @@
             <td>@teacher.Designation.Name</td>
             <td>@teacher.Department.Name</td>
             <td>@teacher.CreditToBeTaken</td>
+            <td>
+                <div class="btn-group">
+                    <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                        Action <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="@Url.Action("Details", "Teacher", new { id = teacher.Id })">Detail</a></li>
+                        <li><a href="@Url.Action("Edit", "Teacher", new { id = teacher.Id })">Edit</a></li>
+                        <li><a href="@Url.Action("Delete", "Teacher", new { id = teacher.Id })" onclick="return confirm('Are sure to delete this item?');">Delete</a></li>
+                    </ul>
+                </div>
+            </td>
         </tr>
     }
     </tbody>
